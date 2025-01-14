@@ -19,18 +19,21 @@ Non-functional requirements incudes things like reliability, scalability, latenc
 A basic RAG architecture is shown below. It is split into an offline environment where data is indexed, and an online environment where a user sends a query, followed by document retrieval and response generation.
 
 ![RAG pipeline](https://miro.medium.com/v2/resize:fit:828/format:webp/1*FhMJ8OE_PoeOyeAavYjzlw.png)
+
 [Source](https://medium.com/@drjulija/what-is-retrieval-augmented-generation-rag-938e4f6e03d1)
 
-Going further than this, some slightly more sophisticated architectures that are often seen in production systems including:
+Going further than this, some slightly more sophisticated architectures that are often seen in production systems include:
 
 **Two-tower architecture** – adds an additional re-ranking step after doing the retrieval step.
 
 ![Two Tower](https://www.pinecone.io/_next/image/?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fvr8gru94%2Fproduction%2F906c3c0f8fe637840f134dbf966839ef89ac7242-3443x1641.png&w=3840&q=75)
+
 [Source](https://www.pinecone.io/learn/series/rag/rerankers/)
 
 **Four-stage architecture** – adds two additional steps of filtering and ordering. The full flow at inference time is i) candidate retrieval, ii) filtering, iii) re-ranking, iv) ordering. 
 
 ![Four Stage](https://miro.medium.com/v2/resize:fit:828/format:webp/0*M-kqT5K4y1fSjRY6)
+
 [Source](https://medium.com/nvidia-merlin/recommender-systems-not-just-recommender-models-485c161c755e)
 
 We can choose an architecture based on the system requirements and through experimentation.
