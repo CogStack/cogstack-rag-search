@@ -62,15 +62,13 @@ Other things to consider include:
 ### Embeddings
 
 Broadly there are three categories of embedding models we could experiment with:
-1.	Use general pre-trained embedding models e.g. [SentenceTransformers](https://sbert.net/) – these could also serve as a baseline
+1.	Use general pre-trained embedding models e.g. [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert), [SentenceTransformers](https://sbert.net/) – these could also serve as a baseline
 2.	Use specific medical embedding models e.g. [MedEmbed](https://huggingface.co/abhinand/MedEmbed-base-v0.1)
 3.	Train our own embedding model
 
 The choice of embedding model depends on the task, the data, as well as what we want to optimise for e.g. accuracy, latency etc.
 
 Embeddings are often computed using bi-encoder models, which encode queries and documents separately.
-
-There are various other flavours of embedding models e.g. late interaction models such as ColBERT which can be useful for fine grained representations. See [here](https://medium.com/@zz1409/colbert-a-late-interaction-model-for-semantic-search-da00f052d30e) for more details.
 
 The [MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard) is a good reference for finding embedding models that perform well at different types of tasks.
 
@@ -79,6 +77,8 @@ The [MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard) is a good
 In a two-tower architecture, the candidate retrieval step typically involves retrieving a large-ish number of documents that are most semantically similar to the user’s query.
 
 Typically this is done by storing the embeddings of the documents in a vector DB e.g. [Pinecone](https://www.pinecone.io/) or [pgvector](https://github.com/pgvector/pgvector) and then using a similarity metric such as cosine distance along with an approximate nearest neighbors (ANN) index and search algorithm. Various ANN indices could be used e.g. [FAISS](https://github.com/facebookresearch/faiss), [ScaNN](https://github.com/google-research/google-research/tree/master/scann), or [HNSW](https://www.pinecone.io/learn/series/faiss/hnsw/). 
+
+We should also establish a baseline for the retrieval step, which is typically keyword search using an algorithm such as BM25. In this case we can skip the embedding step since BM25 works with sparse vectors.
 
 ### Reranking
 
@@ -90,13 +90,48 @@ Re-ranking is often done using cross-encoder models, where the query and documen
 
 There are various other options for re-ranking models. This [post](https://www.galileo.ai/blog/mastering-rag-how-to-select-a-reranking-model) goes into detail on the options and considerations.
 
+One common option is to use a late interaction model such as ColBERT which learns a representation for each token. See [here](https://medium.com/@zz1409/colbert-a-late-interaction-model-for-semantic-search-da00f052d30e) for more details.
+
+Some useful libraries include [RAGatouille](https://github.com/AnswerDotAI/RAGatouille) and [rerankers](https://github.com/AnswerDotAI/rerankers).
+
+### Generation
+
+The final step is to pass the top-k documents to the LLM as context, which the LLM uses to provide a response to the user. 
+
+Various LLMs could be used but since LLama-3.1 is available, that is likely the best option.
+
+Some challenges with using LLMs for generation include the possibility of hallucinations and inconsistencies in search results. These can be managed in various ways, including through prompting, structured outputs and guardrails.
+
+#### Prompting
+
+- Task specific prompts e.g. [GoDaddy](https://www.godaddy.com/resources/news/llm-from-the-trenches-10-lessons-learned-operationalizing-models-at-godaddy#h-1-sometimes-one-prompt-isn-t-enough)
+- Prompt templates
+
+#### Structured Outputs
+
+Structured outputs can be used to return responses in a certain format and/or ensure integration with downstream systems.
+
+Tools like [Instructor](https://github.com/instructor-ai/instructor) or [Outlines](https://github.com/dottxt-ai/outlines) can help with this.
+
+#### Guardrails
+
+Guardrails are used to prevent unwanted outputs when generating responses. 
+
+Types of checks may include – output value validation (similar to structured outputs), syntactic checks, semantic checks and safety checks to prevent preventing harmful or dangerous responses.
+
+This can be done via prompting or RLHF, for example see [here](https://arxiv.org/abs/2204.05862).
+
+It can also be done via validation tools such as [Pydantic](https://docs.pydantic.dev/latest/) or the [Guardrails](https://github.com/guardrails-ai/guardrails) package.
+
+Other useful tools include OpenAI’s [content moderation API](https://platform.openai.com/docs/guides/moderation) and packages for detecting personally identifiable information.
+
 ### Hybrid Search
 
 The existing Elasticsearch solution still provides many benefits over semantic search, including lower variance, better interpretability and greater computational efficiency. It will also perform better for certain types of queries e.g. searching for names, IDs or acronyms, and allows for metadata to be used to refine results e.g. date filters.
 
 The existing solution can be used as a baseline to compare the RAG-based solution against.
 
-It can also be incorporated as part of a hybrid search system. For example, see [this post](https://www.shortwave.com/blog/deep-dive-into-worlds-smartest-email-ai/#our-most-important-tool-ai-search) this post from Shortwave. In hybrid systems the keyword search is usually done early in the overall pipeline.
+It can also be incorporated as part of a hybrid search system. For example, see [this post](https://www.shortwave.com/blog/deep-dive-into-worlds-smartest-email-ai/#our-most-important-tool-ai-search) from Shortwave. In hybrid systems the keyword search is usually done early in the overall pipeline.
 
 Anthropic have recently introduced [Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval) which is a form of hybrid search & retrieval that incorporates contextual embeddings and contextual BM25.
 
@@ -106,26 +141,40 @@ There are various ways to optimise RAG pipelines.
 
 To Be Completed.
 
-### Evaluation
+#### Agents & Agentic RAG
 
-There are different methods of testing & evaluating the solution that we could use.
+To Be Completed.
 
-1.	Human evaluation and user feedback – have users (clinicians) use the service and tell us what they think. This can be through conversations but also ideally directly through the user interface. This feedback can then potentially be used to finetune the models similar to RLHF. See [here](https://arxiv.org/abs/2009.01325) for an example of something like this related to summarisation.
+### Evaluation & Testing
 
-2.	Unit tests & assertions e.g. on model outputs when using an LLM for response generation – see [here](https://hamel.dev/blog/posts/evals/#level-1-unit-tests) for examples.
+There are different methods of evaluating the solution that we could use.
 
-3.	Business / service metrics – these are dependent on the use cases but should ideally be defined with users and ideally be linked to broader service improvement metrics.
+For evaluating the core retrieval tasks, we should start by creating a reference dataset. This would capture query and document (response) pairs. We would then ideally ask clinicians or other experts to annotate these with a score of how relevant the documents are for each query. 
 
-4.	Evaluation metrics for retrieval e.g.
-    1. Mean Reciprocal Rank (MRR)
-    2. Mean Average Precision (MAP)
-    3. Normalised Discounted Cumulative Gain (NDCG)
-    4. Information Density
-    5. Intersection over Union (IoU) for retrieval performance at the token level? See [here](https://research.trychroma.com/evaluating-chunking)
+This dataset would then serve as the ground truth for calculating various metrics for each retrieval or re-ranking technique:
+- Precision@k
+- Recall@k
+- Mean Reciprocal Rank (MRR)
+- Mean Average Precision (MAP)
+- Normalised Discounted Cumulative Gain (nDCG@k)
+- Information Density
+- Intersection over Union (IoU) for retrieval performance at the token level? See [here](https://research.trychroma.com/evaluating-chunking)
+
+The [ir-measures python package](https://ir-measur.es/en/latest/) could be useful for this.
 
 One thing to be aware of is the trade-off between retrieval recall and LLM recall. See discussion of this [here](https://www.pinecone.io/learn/series/rag/rerankers/). This is one of the reasons to use a reranker.
 
-5.	LLM-as-a-Judge – using one LLM to evaluate the responses of another. Shows promise but also need to be mindful of possible biases. See [here](https://arxiv.org/abs/2306.05685) for an evaluation of this technique.
+In addition to this automated evaluation, we may want to do further human evaluation using LGTM@k. This is where we would ask a clinician to manually inspect the top-k results for a query and provide a judgement.
+
+In addition, there are several testing & evaluation mechanisms we should consider:
+
+1.	Business / service metrics – these are dependent on the use cases but should ideally be defined with users and ideally be linked to broader service improvement metrics.
+  
+2.	Unit tests & assertions e.g. on model outputs when using an LLM for response generation – see [here](https://hamel.dev/blog/posts/evals/#level-1-unit-tests) for examples.
+
+3.	Ongoing user feedback & finetuning – have clinicians provide ongoing feedback directly through the user interface. This can then be used to finetune the models similar to RLHF. See [here](https://arxiv.org/abs/2009.01325) for an example of something like this related to summarisation.
+
+4.	LLM-as-a-Judge – using one LLM to evaluate the responses of another. Shows promise but also need to be mindful of possible biases. See [here](https://arxiv.org/abs/2306.05685) for an evaluation of this technique.
 
 ## Deployment & Production
 
@@ -180,39 +229,9 @@ Provide attribution e.g. explain why the system did what it did, provide sources
 
 Provide examples and tips for how to search / prompt the system to get the best results.
 
-## LLM / Generation Specific Considerations
+## Resources
 
-Using an LLM to generate natural language responses has pros and cons. The main cons are the possibility of hallucinations and inconsistencies in search results. These can be managed in various ways, including through prompting, structured outputs and guardrails.
-
-### Prompting
-
-- Task specific prompts e.g. [GoDaddy](https://www.godaddy.com/resources/news/llm-from-the-trenches-10-lessons-learned-operationalizing-models-at-godaddy#h-1-sometimes-one-prompt-isn-t-enough)
-- Prompt templates
-
-### Structured Outputs
-
-Structured outputs can be used to return responses in a certain format and/or ensure integration with downstream systems.
-
-Tools like [Instructor](https://github.com/instructor-ai/instructor) or [Outlines](https://github.com/dottxt-ai/outlines) can help with this.
-
-### Guardrails
-
-Guardrails are used to prevent unwanted outputs when generating responses. 
-
-Types of checks may include – output value validation (similar to structured outputs), syntactic checks, semantic checks and safety checks to prevent preventing harmful or dangerous responses.
-
-This can be done via prompting or RLHF, for example see [here](https://arxiv.org/abs/2204.05862).
-
-It can also be done via validation tools such as [Pydantic](https://docs.pydantic.dev/latest/) or the [Guardrails](https://github.com/guardrails-ai/guardrails) package.
-
-Other useful tools include OpenAI’s [content moderation API](https://platform.openai.com/docs/guides/moderation) and packages for detecting personally identifiable information.
-
-### Agents & Agentic RAG
-
-To Be Completed.
-
-## Useful Resources
-
+These are some resources that I've found useful:
 - [Patterns for Building LLM-based Systems & Products](https://eugeneyan.com/writing/llm-patterns/)
 - [Real-time Machine Learning For Recommendations](https://eugeneyan.com/writing/real-time-recommendations/)
 - [System Design for Recommendations and Search](https://eugeneyan.com/writing/system-design-for-discovery/)
