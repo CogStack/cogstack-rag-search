@@ -133,6 +133,8 @@ The existing solution can be used as a baseline to compare the RAG-based solutio
 
 It can also be incorporated as part of a hybrid search system. For example, see [this post](https://www.shortwave.com/blog/deep-dive-into-worlds-smartest-email-ai/#our-most-important-tool-ai-search) from Shortwave. In hybrid systems the keyword search is usually done early in the overall pipeline.
 
+We can use MedCat to extract key entities from the records and store these as metadata alongside the documents, so that documents can also be retrieved through keyword search as part of a pre-filtering step.
+
 Anthropic have recently introduced [Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval) which is a form of hybrid search & retrieval that incorporates contextual embeddings and contextual BM25.
 
 ### Optimisation
