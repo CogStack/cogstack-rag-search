@@ -4,6 +4,19 @@ These are some initial thoughts on how to go about building a RAG based search e
 
 The purpose of this solution is to provide users (clinicians) with an effective way of searching through Electronic Health Records, particularly for more complex queries that would benefit from using semantic search. This would most likely complement the existing keyword based search through Elasticsearch.
 
+Notes
+- Mainly cogstack team that uses elasticsearch / kibana - using opensearch e.g. search for all records for a given patient, all documents for patients with mention of hypertension etc
+- Kibana interface requires training
+- RAG stuff would be for clinicians - very user friendly text-to-sql interface to search over the record
+- Data sources - Cogstack as a data source (annotations + free text), Caboodle (structured data from hospital)
+- Dummy data - provide schema of caboodle?
+- Types of queries - researchers they know. Patients with edometrial cancer with FIGO stage 2, diagnosed in last 6 months. Not recorded in structured data, but likely in unstructured data. Aggregation aspect, vector matching, date-time. Speak to SafEHR team and digital innovation hub?
+- [Ragas](https://docs.ragas.io/en/stable/) for evaluation / LLM-as-a-judge
+- Agentic workflows
+- Do a breakdown of research vs applied
+- Wednesday meeting > scope of research work already defined, discucss evaluation
+- MVP as soon as possible - then iterate, figure out the requirements from there
+
 ## Solution
 
 ### Requirements
