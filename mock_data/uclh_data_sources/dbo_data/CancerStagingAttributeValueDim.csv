@@ -1,0 +1,11 @@
+CancerStagingKey,AttributeKey,SmartDataElementEpicId,DateKey,StringValue,NumericValue,DateValue,AttributeType
+101,32790,EPIC#42381,20221031,50.5,50.5,,tumour size (mm)
+102,32939,EPIC#42519,20221031,17,17,,total nodes examined
+103,37199,EPIC#46451,20221031,31/10/2022,,2022-10-31,stage date
+104,37602,EPIC#46819,20221101,10.7,10.7,,prostate-specific antigen (PSA) level (ng/mL)
+105,32941,EPIC#42520,20221101,test,,,histopathologic type
+106,438330,EPIC#31000073752,20221101,1,1,,hemoglobin (Hgb) (g/dL)
+101,1001,EPIC#42388,20221031,Stage IV,,,anatomic stage/prognostic group
+101,1002,EPIC#42383,20221031,cT3c,,,primary tumour (T)
+101,1003,EPIC#42384,20221031,cN0,,,regional lymph nodes (N)
+101,1004,EPIC#42385,20221031,cM0,,,distant metastasis (M)	

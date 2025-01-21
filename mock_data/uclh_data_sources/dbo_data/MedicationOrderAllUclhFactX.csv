@@ -1,0 +1,6 @@
+MedicationOrderAllUclhKey,PatientDurableKey,EncounterKey,MedicationKey,StartDateKey,OrderedDateKey,EndDateKey,DiscontinuedDateKey,Route,MinimumDose,DoseUnit,Quantity,QuantityUnit,NumberOfDoses,Frequency,DiscontinueReason,OrderClass,IsOutpatientMode,Source,Mode,MedicationOrderEpicId,Sig,DaysSupply
+1,91,912,1,20230101,20230101,20230131,20230131,Inhalation,2,puff,200,Act,,4 times daily PRN,*Not Applicable,Urgent/Complex medication (UCLH to dispense),1,Manage Orders,Outpatient,201,Take one by mouth 2 times a day,
+2,92,915,1,20230101,20230101,-1,20230201,Oral,14,mg,112,mg,8,2 times weekly,*Not Applicable,Normal,1,*Unspecified,Outpatient,202,Take one by mouth 2 times a day,5.0
+3,93,100010,1,20230101,20230101,20230131,-1,Subcutaneous,60,mg,10,Syringe,10,Every morning,*Not Applicable,Fill Later,1,Anaesthesia Intra-op,Outpatient,203,Take one by mouth 2 times a day,1.0
+4,94,100012,1,20230101,20230101,20230131,20230131,Topical,,*Unspecified,120,g,,Daily scheduled,*Not Applicable,Non-urgent medication (GP to prescribe),1,*Unspecified,Outpatient,204,,
+5,95,5,1,20230101,20230101,20230131,20230131,Sublingual,1,spray,75,Act,,As needed,*Not Applicable,Urgent/Complex medication (UCLH to dispense),1,Ord Rec Discharge Review Orders,Outpatient,205,Take one by mouth 2 times a day,10.0

@@ -1,0 +1,4 @@
+LabComponentResultKey,Paraprotein_Value,Paraprotein_Operator,Paraprotein_Unit,Band1_Value,Band1_Operator,Band1_Unit,Band2_Value,Band2_Operator,Band2_Unit,Band3_Value,Band3_Operator,Band3_Unit,Band4_Value,Band4_Operator,Band4_Unit
+6,0,<,g/L,5,<,g/L,3,=,g/L,,,,,,
+7,3,<,g/L,5,<,g/L,3,=,g/L,3,<,g/L,,,
+8,3,<,g/L,5,<,g/L,3,=,g/L,3,<,g/L,,,

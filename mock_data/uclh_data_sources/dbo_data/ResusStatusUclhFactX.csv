@@ -1,0 +1,5 @@
+PatientDurableKey,EncounterKey,ResusStatusCode,UtcActivatedInstant,UtcDeactivatedInstant
+91,912,2,1577837400,
+92,912,1,1577837400,
+93,912,3,1577837400,1577837401
+94,912,2,1577837400,1577837401

@@ -1,0 +1,2 @@
+BloodPressureKey,PatientDurableKey,Systolic,Diastolic,MeanArterialPressure,SystolicSnomed,DiastolicSnomed,MeanArterialPressureSnomed,TakenInstant,EncounterKey
+1,91,120,80,,"151070002","174255007",,1622160728,912

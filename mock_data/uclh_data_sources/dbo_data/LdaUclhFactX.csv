@@ -1,0 +1,6 @@
+LdaUclhKey,PatientDurableKey,LdaCreationEncounterKey,ldaEpicId,LdaGeneralType,LdaTypeFlowsheetGroupKey,UtcPlacementInstant,UtcRemovalInstant
+1,93,10011,912,Peripheral venous cannula,5,NULL,1566037800
+2,93,10011,912,Peripheral venous cannula,5,NULL,1605078600
+3,91,10011,913,Peripheral venous cannula,5,1565992800,1566032400
+4,92,10011,915,Peripheral venous cannula,5,NULL,1565615640
+5,92,10011,916,Peripheral venous cannula,5,1565949900,NULL

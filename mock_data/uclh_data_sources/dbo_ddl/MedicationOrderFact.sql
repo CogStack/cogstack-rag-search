@@ -1,0 +1,22 @@
+CREATE TABLE MedicationOrderFact (
+  MedicationOrderKey INTEGER PRIMARY KEY,
+  MedicationOrderEpicId INTEGER,
+  PatientDurableKey INTEGER REFERENCES PatientDim (DurableKey),
+  EncounterKey INTEGER REFERENCES EncounterFact (EncounterKey),
+  MedicationKey INTEGER REFERENCES MedicationDim (MedicationKey),
+  StartDateKey INTEGER,
+  OrderedDateKey INTEGER,
+  EndDateKey INTEGER,
+  DiscontinuedDateKey INTEGER,
+  Route TEXT,
+  MinimumDose INTEGER,
+  DoseUnit TEXT,
+  Quantity INTEGER,
+  QuantityUnit TEXT,
+  NumberOfDoses INTEGER,
+  Frequency INTEGER,
+  DiscontinueReason TEXT,
+  Class TEXT,
+  IsOutpatientMode INTEGER,
+  Count INTEGER
+);

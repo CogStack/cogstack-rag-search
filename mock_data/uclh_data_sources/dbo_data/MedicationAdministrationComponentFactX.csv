@@ -1,0 +1,6 @@
+MedicationAdministrationComponentKey,PatientDurableKey,ComponentMedicationKey,AdministrationInstant,AdministrationDurationMinutes,AdministrationActionGroup,AdministrationRoute,ComponentType,ComponentMedicationLine,AdministrationDose,AdministrationRate,ComponentMedicationAmount,AdministrationDoseUnit,AdministrationRateUnit,ComponentMedicationAmountUnit,AdministrationEncounterKey,MedicationOrderEpicId
+1,91,1,1618149023,10,Given,Each Ear,Rate Verify,,,,,,,,912,201
+2,91,1,1618149023,10,Given,Each Ear,Rate Verify,,,,,,,,912,202
+3,91,1,1618149023,10,Given,Each Ear,Rate Verify,,,,,,,,912,204
+4,91,1,1618149023,10,Given,Each Ear,Rate Verify,,,,,,,,912,205
+5,91,1,1618149023,10,Given,Each Ear,Rate Verify,,,,,,,,912,206

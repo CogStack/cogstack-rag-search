@@ -1,0 +1,6 @@
+DurableKey,AddressKey,Address,Sex,BirthDate,Ethnicity,IsCurrent,SmokingStatus,DeathInstant,PrimaryMrn,NhsNumber,AgeInYears,IsValid
+91,12,,Male,1999-02-07,White British,1,Heavy Tobacco Smoker,,12345678,999 123 4567,23,1
+92,13,,Female,2002-03-15,Chinese,1,Heavy Tobacco Smoker,,987654321,999 124 5678,20,1
+93,14,,Male,1997-09-20,White British,1,Heavy Tobacco Smoker,315532800,54SR678/3,999 124 5679,25,1
+94,,,Male,1900-01-01,White British,1,,,134567899,999 111 9999,122,1
+95,,'HMP Pentonville',Male,1975-12-02,White British,1,,,5020765,999 124 1234,47,1

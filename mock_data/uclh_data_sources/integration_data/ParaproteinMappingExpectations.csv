@@ -1,0 +1,5 @@
+PatientDurableKey,LabComponentKey,measurement_concept_id,measurement_date,measurement_datetime,measurement_type_concept_id,operator_concept_id,value_as_number,unit_concept_id
+95,1000,36660625,28/05/2021,28/05/2021 08:12,32817,4171756,3,8636
+95,1000,3029713,28/05/2021,28/05/2021 08:12,32817,4171756,5,8636
+95,1000,3035797,28/05/2021,28/05/2021 08:12,32817,4172703,3,8636
+95,1000,3029338,28/05/2021,28/05/2021 08:12,32817,4171756,3,8636
