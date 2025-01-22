@@ -2,17 +2,26 @@
 
 These are some initial thoughts on how to go about building a RAG based search engine for CogStack at UCLH. 
 
-The purpose of this solution is to provide users (clinicians) with an effective way of searching through Electronic Health Records, particularly for more complex queries that would benefit from using semantic search. This would most likely complement the existing keyword based search through Elasticsearch.
+The purpose of this solution is to provide users (clinicians) with an effective way of searching through unstructured data from Electronic Health Records, particularly for more complex queries that would benefit from using semantic / vector search. 
+
+An example query that we would like to be able to answer - Patients with edometrial cancer with FIGO stage 2, diagnosed in last 6 months. Not recorded in structured data, but likely in unstructured data. Aggregation aspect, vector matching, date-time filter etc. 
+
+The existing Kibana interface requires training to use, so it is hoped that this solution provides an easier and simpler option.
+
+In addition a text-to-SQL component could provide a way to incorporate structured searches over Caboodle as well. This would most likely complement the existing keyword based search through Elasticsearch.
+
+Also want to explore agentic workflows.
 
 Notes
-- Mainly cogstack team that uses elasticsearch / kibana - using opensearch e.g. search for all records for a given patient, all documents for patients with mention of hypertension etc
-- Kibana interface requires training
-- RAG stuff would be for clinicians - very user friendly text-to-sql interface to search over the record
-- Data sources - Cogstack as a data source (annotations + free text), Caboodle (structured data from hospital)
-- Dummy data - provide schema of caboodle?
-- Types of queries - researchers they know. Patients with edometrial cancer with FIGO stage 2, diagnosed in last 6 months. Not recorded in structured data, but likely in unstructured data. Aggregation aspect, vector matching, date-time. Speak to SafEHR team and digital innovation hub?
-- [Ragas](https://docs.ragas.io/en/stable/) for evaluation / LLM-as-a-judge
-- Agentic workflows
+- 
+- 
+
+Actions
+- Dummy data - provide schema of caboodle
+- Speak to SafEHR team and digital innovation hub around requirements and types of queries
+
+Possible sub-projects
+  
 - Do a breakdown of research vs applied
 - Wednesday meeting > scope of research work already defined, discucss evaluation
 - MVP as soon as possible - then iterate, figure out the requirements from there
@@ -50,6 +59,11 @@ Going further than this, some slightly more sophisticated architectures that are
 [Source](https://medium.com/nvidia-merlin/recommender-systems-not-just-recommender-models-485c161c755e)
 
 We can choose an architecture based on the system requirements and through experimentation.
+
+### Data Sources
+
+- Cogstack as a data source (annotations + free text)
+- Caboodle (structured data from hospital)
 
 ### Chunking
 
@@ -190,6 +204,8 @@ In addition, there are several testing & evaluation mechanisms we should conside
 3.	Ongoing user feedback & finetuning – have clinicians provide ongoing feedback directly through the user interface. This can then be used to finetune the models similar to RLHF. See [here](https://arxiv.org/abs/2009.01325) for an example of something like this related to summarisation.
 
 4.	LLM-as-a-Judge – using one LLM to evaluate the responses of another. Shows promise but also need to be mindful of possible biases. See [here](https://arxiv.org/abs/2306.05685) for an evaluation of this technique.
+
+[Ragas](https://docs.ragas.io/en/stable/) for evaluation / LLM-as-a-judge.
 
 ## Deployment & Production
 
