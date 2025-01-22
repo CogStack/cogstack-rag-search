@@ -10,17 +10,22 @@ Notes from meeting
 - Extractive vs abstractive questions
 - Shubham spoke to clinician at SLAM
 - Medical data is tricky to chunk meaningfully - algorithm that does some topic analysis?
-- Ideally need some ground truth data - golden dataset with questions and answers (from clinicians or an LLM?)
+- Ideally need some ground truth data - golden dataset with questions (and answers?). This could come from clinicians or an LLM.
 - RAGfusion - generating possible queries
 - Needs benchmarking
 - (EHR-DS-QA)[https://physionet.org/content/ehr-ds-qa/1.0.0/]
-- Patient level vs. multi-patient
+- Patient level vs. multi-patient queries
 - Start with oncology or similar - can target specific clinicians
 
 Actions
-- Shubham to test on mimic / omopified-mimic
+- Set up fortnightly catch up - Satyam - DONE
 - Use an LLM to generate some questions - Kawsar, Satyam, Shubham?
-- Set up fortnightly catch up - Satyam
+- Speak to SafEHR team and UCLH digital innovation hub around requirements and types of queries - Satyam, Kawsar
+- Think about how to get clinician time / ask of clinicians at KCH, SLaM inc. in specific specialities - Tom?
+- Test RAG approach on mimic data - Shubham
+- Explore how we can get an omopified version of the mimic data - Kawsar - DONE?
+- Provide schema of caboodle to create dummy data - Kawsar
+- Build basic front-end MVP using synthetic data to show to stakeholders and use to elicit requirements - Satyam
 
 # cogstack-rag-search
 
@@ -49,11 +54,6 @@ Applied tasks / sub-projects
 - Define requirements
 - Build application / front-end
 - Engineering, deployment and monitoring
-
-Existing actions
-- Dummy data - provide schema of caboodle
-- Speak to SafEHR team and digital innovation hub around requirements and types of queries
-- Build basic Streamlit MVP using synthetic data to show to stakeholders -figure out the requirements from there, then iterate
 
 ## Solution
 
