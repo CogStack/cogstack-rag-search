@@ -1,30 +1,40 @@
+22/01/25 meeting - Suggested Agenda
+- Intro and initial thoughts (Satyam, Kawsar)
+- Existing KCL research (Shubham, Tom)
+- Discussion on scope, existing projects, possible projects & sub-projects, collaboration
+- Evaluation
+
 # cogstack-rag-search
 
 These are some initial thoughts on how to go about building a RAG based search engine for CogStack at UCLH. 
 
 The purpose of this solution is to provide users (clinicians) with an effective way of searching through unstructured data from Electronic Health Records, particularly for more complex queries that would benefit from using semantic / vector search. 
 
-An example query that we would like to be able to answer - Patients with edometrial cancer with FIGO stage 2, diagnosed in last 6 months. Not recorded in structured data, but likely in unstructured data. Aggregation aspect, vector matching, date-time filter etc. 
-
 The existing Kibana interface requires training to use, so it is hoped that this solution provides an easier and simpler option.
+
+An example query that we would like to be able to answer - Patients with edometrial cancer with FIGO stage 2, diagnosed in last 6 months. Not recorded in structured data, but likely in unstructured data. There are several components to this including an aggregation aspect, vector matching, date-time filter etc. 
 
 In addition a text-to-SQL component could provide a way to incorporate structured searches over Caboodle as well. This would most likely complement the existing keyword based search through Elasticsearch.
 
 Also want to explore agentic workflows.
 
-Notes
-- 
-- 
+## Tasks & Sub-Projects
 
-Actions
+Research tasks / sub-projects
+- Broadly the modelling and evaluation tasks
+ - Train own embedding / retrieval model
+ - Train own reranking model
+ - RLHF / fine-tuning of models using clinician feedback and annotations
+
+Applied tasks / sub-projects
+- Define requirements
+- Build application / front-end
+- Engineering, deployment and monitoring
+
+Existing actions
 - Dummy data - provide schema of caboodle
 - Speak to SafEHR team and digital innovation hub around requirements and types of queries
-
-Possible sub-projects
-  
-- Do a breakdown of research vs applied
-- Wednesday meeting > scope of research work already defined, discucss evaluation
-- MVP as soon as possible - then iterate, figure out the requirements from there
+- Build basic Streamlit MVP using synthetic data to show to stakeholders -figure out the requirements from there, then iterate
 
 ## Solution
 
