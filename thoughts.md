@@ -13,7 +13,7 @@ Notes from meeting
 - Ideally need some ground truth data - golden dataset with questions (and answers?). This could come from clinicians or an LLM.
 - RAGfusion - generating possible queries
 - Needs benchmarking
-- (EHR-DS-QA)[https://physionet.org/content/ehr-ds-qa/1.0.0/]
+- [EHR-DS-QA](https://physionet.org/content/ehr-ds-qa/1.0.0/)
 - Patient level vs. multi-patient queries
 - Start with oncology or similar - can target specific clinicians
 
