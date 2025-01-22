@@ -4,6 +4,24 @@
 - Discussion on scope, existing projects, possible projects & sub-projects, collaboration
 - Evaluation
 
+Notes from meeting
+- Turn on the rag feature in elastic
+- Version on mimic iv
+- Extractive vs abstractive questions
+- Shubham spoke to clinician at SLAM
+- Medical data is tricky to chunk meaningfully - algorithm that does some topic analysis?
+- Ideally need some ground truth data - golden dataset with questions and answers (from clinicians or an LLM?)
+- RAGfusion - generating possible queries
+- Needs benchmarking
+- (EHR-DS-QA)[https://physionet.org/content/ehr-ds-qa/1.0.0/]
+- Patient level vs. multi-patient
+- Start with oncology or similar - can target specific clinicians
+
+Actions
+- Shubham to test on mimic / omopified-mimic
+- Use an LLM to generate some questions - Kawsar, Satyam, Shubham?
+- Set up fortnightly catch up - Satyam
+
 # cogstack-rag-search
 
 These are some initial thoughts on how to go about building a RAG based search engine for CogStack at UCLH. 
@@ -25,6 +43,7 @@ Research tasks / sub-projects
  - Train own embedding / retrieval model
  - Train own reranking model
  - RLHF / fine-tuning of models using clinician feedback and annotations
+ - Algorithm for semantic chunking on medical data
 
 Applied tasks / sub-projects
 - Define requirements
