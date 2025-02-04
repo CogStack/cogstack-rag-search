@@ -4,6 +4,8 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy
 from openai import OpenAI
+from dotenv import load_dotenv
+import os
 
 nlp = spacy.load("en_core_web_md")
 
@@ -29,14 +31,10 @@ def keyword_search(df, keywords):
 def semantic_search(df, question_embs, answer_embs, query, top_k=5):
     query_emb = nlp(query).vector
 
-    ans_scores = cosine_similarity([query_emb], answer_embs)[0]
-    top_ans_idx = np.argsort(-ans_scores)[:top_k]
-
     qn_scores = cosine_similarity([query_emb], question_embs)[0]
     top_qn_idx = np.argsort(-qn_scores)[:top_k]
 
-    final_idx = list(top_ans_idx) + list(top_qn_idx)
-    return df.iloc[final_idx][["ID","Question","Answer"]]
+    return df.iloc[top_qn_idx][["ID","Question","Answer"]]
 
 def main():
     st.set_page_config(layout="wide")
@@ -57,8 +55,9 @@ def main():
     #Load data
     df = pd.read_csv('qa.csv')
 
-    #Create or load embeddings
-    question_embs, answer_embs = create_embeddings(df)
+    #Load the environment variables from the .env file
+    load_dotenv()
+    key = os.environ.get("OPENAI_API_KEY")
 
     # Initialize OpenAI client
     client = OpenAI(api_key=key)
@@ -67,20 +66,11 @@ def main():
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-4o-mini"
 
-    # Initialize session state for background conversation history
-    if 'background_messages' not in st.session_state:
-        st.session_state.background_messages = [
-
-        #Provide information about the task, the role the LLM should assume and the expected output
-        {"role": "system", "content": 'Below is some background information about pituitary adenoma'},
-        
-    ]
-
     #Title
     st.title("CogStack Search Mockup - Pituitary Adenoma")
 
     #Create two columns
-    col_left, col_right = st.columns([3, 2], gap="large")
+    col_left, col_right = st.columns(2, gap="large")
 
     # ----------------------
     # RIGHT COLUMN: KEYWORDS
@@ -110,6 +100,9 @@ def main():
         st.write("Current Keywords:")
         st.write(st.session_state["keywords"])
 
+        #Placeholder for LLM response
+        llm_response_placeholder = st.empty()
+
     # ---------------------
     # LEFT COLUMN: FREE TEXT
     # ---------------------
@@ -133,52 +126,42 @@ def main():
                 #1)Filter by keywords
                 filtered_data = keyword_search(df, st.session_state["keywords"])
 
-                filtered_indices = filtered_data.index
-                filtered_question_embs = [question_embs[i] for i in filtered_indices]
-                filtered_answer_embs   = [answer_embs[i]   for i in filtered_indices]
-                
                 #2)Further refine by semantic search
-                top_results = semantic_search(filtered_data, filtered_question_embs, filtered_answer_embs, query=free_text_query.strip(), top_k=5)
+                question_embs, answer_embs = create_embeddings(filtered_data)
+                top_results = semantic_search(filtered_data, question_embs, answer_embs, query=free_text_query.strip(), top_k=5)
                 
                 #Display results
-                st.subheader("Top 10 Semantic Matches")
-
-                ##Option 1
-                st.write(top_results)
-                #st.write(top_results["Answer"].tolist())
+                st.subheader("Top 5 Semantic Matches")
+                #st.write(top_results)
+                st.write(top_results["Answer"].tolist())
                 #for _, row in top_results.iterrows():
                     #st.markdown(f"**Q:** {row['Question']}\n\n**A:** {row['Answer']}")
 
-                #Create prompt based on results
-                results_prompt = "\n".join(f"- {text}" for text in top_results["Answer"].tolist())    
+                #Create a single prompt with the search results and user’s query
+                results_prompt = "\n".join(f"- {ans}" for ans in top_results["Answer"].tolist())
+                
+                prompt = f"""
+                You are a helpful assistant. Below are some extracted passages relevant to the user's query:
 
-                #Add results and query to the background conversation history
-                context = f"{results_prompt}\n\nUser Query: {free_text_query.strip()}"
-                st.session_state.background_messages.append({"role": "system", "content": context})
+                {results_prompt}
 
-                #Add a final prompt for the generation
-                final_prompt = "Using the information above and the user's query, provide a response"
-                st.session_state.background_messages.append({"role": "system", "content": final_prompt})
+                The user's query is: "{free_text_query.strip()}"
 
-                #Combine background and visible messages for the API call
-                combined_messages = st.session_state.background_messages
+                Based on these passages and the query, please provide a concise response:
+                """
 
-                #Print combined messages for debugging
-                print("Combined Messages:")
-                for msg in combined_messages:
-                    print(f"Role: {msg['role']}, Content: {msg['content']}\n")
-
-                #Generate aresponse from OpenAI
+                #Call the OpenAI API with this prompt
                 completion = client.chat.completions.create(
                     model=st.session_state["openai_model"],
                     messages=[
-                            {"role": m["role"], "content": m["content"]}
-                            for m in combined_messages
-                        ]
+                        {"role": "system", "content": prompt}
+                    ]
                 )
 
-                st.write(completion.choices[0].message)
+                #Show the LLM response in the right column
+                with col_right:
+                    st.subheader("LLM Response")
+                    st.write(completion.choices[0].message.content)
                      
-
 if __name__ == "__main__":
     main()
