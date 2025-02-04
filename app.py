@@ -1,7 +1,20 @@
 import streamlit as st
+import pandas as pd
+
+df = pd.read_csv('qa.csv')
 
 def keyword_search(keywords):
-    filtered_data = keywords
+
+    #If no keywords provided, return the entire DataFrame
+    if not keywords:
+        return df
+
+    #Combine keywords into one regex pattern, separated by the OR symbol '|'
+    pattern = "|".join(keywords)
+
+    #Use str.contains with case=False (ignore case) and na=False (exclude NaN)
+    filtered_data = df[df["Answer"].str.contains(pattern, case=False, na=False)]
+
     return filtered_data
 
 def free_text_search(filtered_data, query):
