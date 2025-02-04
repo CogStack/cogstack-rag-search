@@ -1,0 +1,9 @@
+FlowsheetRowKey,Name,FlowsheetRowEpicId,Unit,ValueType
+1,,400602,NA,Numeric Type
+2,,5,NA,Numeric Type
+3,,250026,L/min,Numeric Type
+4,,40207,kPa,Numeric Type
+5,"LDA PICC TWO LUMEN",7095120,,Numeric Type
+6,"Pulse",8,,Numeric Type
+7,"Pulse Oximetry",10,,Numeric Type
+8,"R PULSE SOURCE",301230,,Custom list

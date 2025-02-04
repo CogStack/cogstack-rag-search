@@ -1,0 +1,9 @@
+FlowsheetValueKey,PatientDurableKey,EncounterKey,FlowsheetRowKey,Value,NumericValue,TakenInstant
+1,91,912,1,1:10,,1617712200
+2,91,912,2,120/80,,1614303832
+3,91,912,3,,3.2,1621088614
+4,91,912,4,,100,1621088614
+5,91,912,5,"Gastrostomy-jejunostomy",,1621088614
+6,92,912,6,"Tracheostomy",,1621088614
+7,92,912,7,,20,1621088614
+8,92,912,8,"Radial",,1621088614

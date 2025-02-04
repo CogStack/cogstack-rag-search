@@ -1,0 +1,4 @@
+HospitalAdmissionKey,EncounterKey,PatientDurableKey,AdmissionDateKey,AdmissionTimeOfDayKey,DischargeDisposition,AdmissionSourceId_X,DischargeDestinationId_X
+1,912,91,20200101,13,,54,10
+2,913,91,20200101,54,Patient Died,54,10
+3,915,91,20200101,643,,62,10

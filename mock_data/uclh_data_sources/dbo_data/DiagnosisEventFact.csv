@@ -1,0 +1,4 @@
+DiagnosisEventKey,PatientDurableKey,DiagnosisKey,EncounterKey,StartDateKey,EndDateKey,Type,IsPrimaryDiagnosis_X
+1,91,176131,912,20210601,20210630,Problem List,
+2,91,999999,912,20210601,20210630,Billing Diagnosis,1
+3,91,999999,912,20210601,20210630,Billing Diagnosis,0
