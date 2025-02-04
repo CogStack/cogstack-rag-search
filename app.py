@@ -23,7 +23,7 @@ def keyword_search(df, keywords):
     #Combine keywords into one regex pattern, separated by the OR symbol '|'
     pattern = "|".join(keywords)
 
-    #Use str.contains with case=False (ignore case) and na=False (exclude NaN)
+    #Return rows where the answer column contains at least one keyword
     filtered_data = df[df["Answer"].str.contains(pattern, case=False, na=False)]
 
     return filtered_data
@@ -67,19 +67,27 @@ def main():
         st.session_state["openai_model"] = "gpt-4o-mini"
 
     #Title
-    st.title("CogStack Search Mockup - Pituitary Adenoma")
+    st.title("CogStack Search Tool Mockup")
 
-    #Create two columns
-    col_left, col_right = st.columns(2, gap="large")
+    st.write(
+        "This is a mockup of an app for clinicians to search through EHRs / CogStack data using a mixture of traditional keyword search and semantic search."
+        " It uses a synthetic Q&A dataset on Pituitary Adenoma made up of 100 Q&A pairs that has been created by prompting ChatGPT."
+        " The underlying search functionality is very basic and the main purpose of this mockup is to help elicit requirements from users."
+    )
+
+    #Create four columns
+    col1_left, col1_right = st.columns(2, gap="large")
+    col2_left, col2_right = st.columns(2, gap="large")
 
     # ----------------------
-    # RIGHT COLUMN: KEYWORDS
+    # LEFT COLUMN: KEYWORDS
     # ----------------------
-    with col_right:
-        st.subheader("Keyword Search")
+    with col1_left:
+        st.subheader("Keyword Filtering")
         st.write(
-            "Enter single-word keywords below to filter the data."
-            " Press Add to include each keyword in the filter list."
+            "Here the user can enter keywords and add them to a list."
+            " This list of keywords is used to pre-filter the Answers from the Q&A dataset."
+            " The search will filter out any Q&A pairs where the Answer doesn't contain at least one of the added words."
         )
         #A small horizontal layout for the input + Add button
         kw_input_col, kw_add_btn_col = st.columns([3, 1], gap="small")
@@ -100,23 +108,24 @@ def main():
         st.write("Current Keywords:")
         st.write(st.session_state["keywords"])
 
-        #Placeholder for LLM response
-        llm_response_placeholder = st.empty()
-
     # ---------------------
-    # LEFT COLUMN: FREE TEXT
+    # RIGHT COLUMN: SEMANTIC SEARCH
     # ---------------------
-    with col_left:
-        st.subheader("Free Text (Semantic) Search")
+    with col1_right:
+        st.subheader("Semantic Search")
         st.write(
-            "Enter a free-text query below."
-            " This will be used to do a semantic search and retrieve the most relevant text from the database."
+            "Here the user can enter a free-text query."
+            " This will be used to do a semantic similarity search against the remaining Questions in the Q&A dataset."
+            " The most similar Q&A pairs are retrieved and the Answers are provided to the LLM along with the original query."
         )
         free_text_query = st.text_area(
             label="",
             placeholder="Type your query here...",
             height=150
         )
+
+        #Placeholder for LLM response
+        #llm_response_placeholder = st.empty()
 
         if st.button("Search"):
             #If user hasn't entered anything at all
@@ -129,13 +138,15 @@ def main():
                 #2)Further refine by semantic search
                 question_embs, answer_embs = create_embeddings(filtered_data)
                 top_results = semantic_search(filtered_data, question_embs, answer_embs, query=free_text_query.strip(), top_k=5)
-                
-                #Display results
-                st.subheader("Top 5 Semantic Matches")
-                #st.write(top_results)
-                st.write(top_results["Answer"].tolist())
-                #for _, row in top_results.iterrows():
-                    #st.markdown(f"**Q:** {row['Question']}\n\n**A:** {row['Answer']}")
+
+                #Show the matches in the left column
+                with col2_left:
+                    st.subheader("Top 5 Semantic Matches")
+                    st.write("The most similar Q&A pairs (based on the similarity between the queries) from the filtered data are shown below:")
+                    st.write(top_results)
+                    #st.write(top_results["Answer"].tolist())               
+                    #for _, row in top_results.iterrows():
+                        #st.markdown(f"**Q:** {row['Question']}\n\n**A:** {row['Answer']}")
 
                 #Create a single prompt with the search results and user’s query
                 results_prompt = "\n".join(f"- {ans}" for ans in top_results["Answer"].tolist())
@@ -159,8 +170,9 @@ def main():
                 )
 
                 #Show the LLM response in the right column
-                with col_right:
+                with col2_right:
                     st.subheader("LLM Response")
+                    st.write("This is the response produced by the LLM after passing it the original query and the Answers from the top 5 matches:")
                     st.write(completion.choices[0].message.content)
                      
 if __name__ == "__main__":
