@@ -1,3 +1,14 @@
+Notes from 05/02 meeting
+- Start with categories of question - cohort level question, population level, condition level, medication level question etc
+- Option to swap in different models - LLM and embedding model
+- Vectorizing once
+
+Actions from 05/02 meeting
+- Start a doc to capture possible questions - Satyam
+- Look for previous ethics submissions - Tom
+- Chase Oliver from UCLH digital innovation hub - Satyam
+- Look at structured data aspects & Caboodle schema - Satyam
+
 22/01/25 meeting - Suggested Agenda
 - Intro and initial thoughts (Satyam, Kawsar)
 - Existing KCL research (Shubham, Tom)
