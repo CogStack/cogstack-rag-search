@@ -6,6 +6,7 @@ import spacy
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
+import sqlite3
 
 nlp = spacy.load("en_core_web_md")
 
@@ -35,6 +36,26 @@ def semantic_search(df, question_embs, answer_embs, query, top_k=5):
     top_qn_idx = np.argsort(-qn_scores)[:top_k]
 
     return df.iloc[top_qn_idx][["ID","Question","Answer"]]
+
+def run_query(table_name) -> pd.DataFrame:
+    """
+    Execute a SQL query against a local SQLite database table and return the results.
+    """
+    db_path = "mock_data//uclh_data_sources//mock_dbo.sqlite"
+
+    #Connect to the database
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    #Query a specific table
+    query = f"SELECT * FROM {table_name} LIMIT 5;"
+    df = pd.read_sql(query, conn)
+
+    #Close connection
+    conn.close()
+
+    #Show the data
+    return df
 
 def main():
     st.set_page_config(layout="wide")
@@ -78,6 +99,7 @@ def main():
     #Create four columns
     col1_left, col1_right = st.columns(2, gap="large")
     col2_left, col2_right = st.columns(2, gap="large")
+    col3_left, col3_right = st.columns(2, gap="large")
 
     # ----------------------
     # LEFT COLUMN: KEYWORDS
@@ -174,6 +196,33 @@ def main():
                     st.subheader("LLM Response")
                     st.write("This is the response produced by the LLM after passing it the original query and the Answers from the top 5 matches:")
                     st.write(completion.choices[0].message.content)
-                     
+
+    with col3_left:
+        st.subheader("Structured Data Query")
+        st.write("Enter the **name** of a database table to view data from it. A list of table names is provided on the right hand side")
+
+        table_name = st.text_input("Table Name", "PatientDim")
+
+        if st.button("Run DB Query"):
+            try:
+                results_df = run_query(table_name)
+                st.write("Results:")
+                st.dataframe(results_df)
+            except Exception as e:
+                st.error(f"Error running query: {e}")
+
+    with col3_right:
+        db_path = "mock_data//uclh_data_sources//mock_dbo.sqlite"
+
+        #Connect to the database
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        tables = pd.read_sql("SELECT name FROM sqlite_master WHERE type='table';", conn)
+        st.write("Tables in database:", tables)
+
+        #Close connection
+        conn.close()
+        
 if __name__ == "__main__":
     main()
