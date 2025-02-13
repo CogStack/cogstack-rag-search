@@ -141,7 +141,7 @@ def main():
             " The most similar Q&A pairs are retrieved and the Answers are provided to the LLM along with the original query."
         )
         free_text_query = st.text_area(
-            label="",
+            label="free text query",
             placeholder="Type your query here...",
             height=150
         )
@@ -201,7 +201,12 @@ def main():
         st.subheader("Structured Data Query")
         st.write("Enter the **name** of a database table to view data from it. A list of table names is provided on the right hand side")
 
-        table_name = st.text_input("Table Name", "PatientDim")
+        table_name = st.text_input(
+            label="Enter your query",  # Non-empty label
+            label_visibility="collapsed",  # Hides it visually while preserving accessibility
+            placeholder="Type here...",
+            key="some_key"
+        )
 
         if st.button("Run DB Query"):
             try:
