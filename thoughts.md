@@ -1,43 +1,3 @@
-Notes from 05/02 meeting
-- Start with categories of question - cohort level question, population level, condition level, medication level question etc
-- Option to swap in different models - LLM and embedding model
-- Vectorizing once
-
-Actions from 05/02 meeting
-- Start a doc to capture possible questions - Satyam
-- Look for previous ethics submissions - Tom
-- Chase Oliver from UCLH digital innovation hub - Satyam
-- Look at structured data aspects & Caboodle schema - Satyam
-
-22/01/25 meeting - Suggested Agenda
-- Intro and initial thoughts (Satyam, Kawsar)
-- Existing KCL research (Shubham, Tom)
-- Discussion on scope, existing projects, possible projects & sub-projects, collaboration
-- Evaluation
-
-Notes from meeting
-- Turn on the rag feature in elastic
-- Version on mimic iv
-- Extractive vs abstractive questions
-- Shubham spoke to clinician at SLAM
-- Medical data is tricky to chunk meaningfully - algorithm that does some topic analysis?
-- Ideally need some ground truth data - golden dataset with questions (and answers?). This could come from clinicians or an LLM.
-- RAGfusion - generating possible queries
-- Needs benchmarking
-- [EHR-DS-QA](https://physionet.org/content/ehr-ds-qa/1.0.0/)
-- Patient level vs. multi-patient queries
-- Start with oncology or similar - can target specific clinicians
-
-Actions
-- Set up fortnightly catch up - Satyam - DONE
-- Use an LLM to generate some questions - Kawsar, Satyam, Shubham?
-- Speak to SafEHR team and UCLH digital innovation hub around requirements and types of queries - Satyam, Kawsar
-- Think about how to get clinician time / ask of clinicians at KCH, SLaM inc. in specific specialities - Tom?
-- Test RAG approach on mimic data - Shubham
-- Explore how we can get an omopified version of the mimic data - Kawsar - DONE?
-- Provide schema of caboodle to create dummy data - Kawsar
-- Build basic front-end MVP using synthetic data to show to stakeholders and use to elicit requirements - Satyam
-
 # cogstack-rag-search
 
 These are some initial thoughts on how to go about building a RAG based search engine for CogStack at UCLH. 
@@ -319,3 +279,45 @@ These are some resources that I've found useful:
 - [Recommender Systems, Not Just Recommender Models | by Even Oldridge | NVIDIA Merlin | Medium](https://medium.com/nvidia-merlin/recommender-systems-not-just-recommender-models-485c161c755e)
 - [6 Advanced RAG Optimization Strategies: Analysis of 14 Key Research Papers | by Joyce Birkins | Medium](https://medium.com/@joycebirkins/6-advanced-rag-optimization-strategies-analysis-of-14-key-research-papers-f12329975009)
 - [Advanced RAG Optimization Strategies (2): Problem Decomposition, Retrieval Clues, and Step-by-Step Reasoning | by Joyce Birkins | Medium](https://medium.com/@joycebirkins/advanced-rag-optimization-strategies-2-problem-decomposition-retrieval-clues-and-step-by-step-df2ff32fec01)
+
+## Meeting Notes
+
+Notes from 05/02 meeting
+- Start with categories of question - cohort level question, population level, condition level, medication level question etc
+- Option to swap in different models - LLM and embedding model
+- Vectorizing once
+
+Actions from 05/02 meeting
+- Start a doc to capture possible questions - Satyam
+- Look for previous ethics submissions - Tom
+- Chase Oliver from UCLH digital innovation hub - Satyam
+- Look at structured data aspects & Caboodle schema - Satyam
+
+22/01/25 meeting - Suggested Agenda
+- Intro and initial thoughts (Satyam, Kawsar)
+- Existing KCL research (Shubham, Tom)
+- Discussion on scope, existing projects, possible projects & sub-projects, collaboration
+- Evaluation
+
+Notes from meeting
+- Turn on the rag feature in elastic
+- Version on mimic iv
+- Extractive vs abstractive questions
+- Shubham spoke to clinician at SLAM
+- Medical data is tricky to chunk meaningfully - algorithm that does some topic analysis?
+- Ideally need some ground truth data - golden dataset with questions (and answers?). This could come from clinicians or an LLM.
+- RAGfusion - generating possible queries
+- Needs benchmarking
+- [EHR-DS-QA](https://physionet.org/content/ehr-ds-qa/1.0.0/)
+- Patient level vs. multi-patient queries
+- Start with oncology or similar - can target specific clinicians
+
+Actions
+- Set up fortnightly catch up - Satyam - DONE
+- Use an LLM to generate some questions - Kawsar, Satyam, Shubham?
+- Speak to SafEHR team and UCLH digital innovation hub around requirements and types of queries - Satyam, Kawsar
+- Think about how to get clinician time / ask of clinicians at KCH, SLaM inc. in specific specialities - Tom?
+- Test RAG approach on mimic data - Shubham
+- Explore how we can get an omopified version of the mimic data - Kawsar - DONE?
+- Provide schema of caboodle to create dummy data - Kawsar
+- Build basic front-end MVP using synthetic data to show to stakeholders and use to elicit requirements - Satyam
